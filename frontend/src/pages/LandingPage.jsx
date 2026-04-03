@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import {
   Sparkles, TrendingUp, BarChart3, FileText, MessageSquare,
   Brain, Target, Zap, Shield, ChevronRight, ArrowRight,
-  Star, Users, Globe, Lightbulb
+  Star, Users, Globe, Lightbulb, Github, Linkedin, Mail
 } from 'lucide-react'
 
 const features = [
@@ -69,14 +69,13 @@ function LandingPage() {
       <nav className="fixed top-0 w-full z-50 bg-dark-950/80 backdrop-blur-xl border-b border-dark-800/50">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-500 to-accent-cyan flex items-center justify-center">
-              <Target className="w-5 h-5 text-white" />
-            </div>
+            <img src="/logo.png" alt="BizNova Logo" className="w-10 h-10 rounded-xl object-cover" />
             <span className="font-display font-bold text-xl gradient-text">BizNova</span>
           </div>
           <div className="hidden md:flex items-center gap-8">
             <a href="#features" className="text-dark-300 hover:text-white transition-colors text-sm font-medium">Features</a>
             <a href="#tech" className="text-dark-300 hover:text-white transition-colors text-sm font-medium">Technology</a>
+            <a href="#about" className="text-dark-300 hover:text-white transition-colors text-sm font-medium">About</a>
             <a href="#stats" className="text-dark-300 hover:text-white transition-colors text-sm font-medium">Stats</a>
           </div>
           <button
@@ -209,6 +208,55 @@ function LandingPage() {
         </div>
       </section>
 
+      {/* About Section */}
+      <section id="about" className="py-24 px-6 relative">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-brand-400 font-semibold text-sm uppercase tracking-wider mb-3">The Mind Behind BizNova</p>
+            <h2 className="font-display font-bold text-4xl text-white mb-4">
+              Meet the <span className="gradient-text">Creator</span>
+            </h2>
+          </div>
+
+          <div className="glass-card overflow-hidden">
+            <div className="p-10 flex flex-col md:flex-row items-center md:items-start gap-10 bg-dark-900/50">
+              
+              <div className="w-32 h-32 rounded-3xl overflow-hidden border border-dark-700 shadow-2xl flex-shrink-0 group">
+                <div className="w-full h-full bg-gradient-to-br from-brand-500 to-accent-cyan flex items-center justify-center text-4xl font-bold text-white group-hover:scale-105 transition-transform duration-500">
+                  MH
+                </div>
+              </div>
+              
+              <div className="flex-1 text-center md:text-left">
+                <h3 className="text-3xl font-display font-bold text-white mb-2">Mudassar Hussain</h3>
+                <p className="text-accent-cyan font-medium mb-6 text-lg">AI / ML Engineer | Gen AI | RAG | MLOps | FastAPI</p>
+                
+                <p className="text-dark-300 leading-relaxed mb-8">
+                  Passionate about building scalable AI-driven solutions that solve real-world problems. 
+                  With specialized expertise in Machine Learning, Generative AI, RAG architectures, and MLOps, 
+                  I architected and built BizNova to empower entrepreneurs with actionable, data-driven business intelligence.
+                </p>
+
+                <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
+                  <a href="https://github.com/MudassarGill" target="_blank" rel="noopener noreferrer" className="btn-secondary px-5 py-2.5 flex items-center gap-2 group">
+                    <Github className="w-5 h-5 text-dark-200 group-hover:text-white transition-colors" />
+                    <span className="text-sm font-medium">GitHub</span>
+                  </a>
+                  <a href="https://linkedin.com/in/m-mudassar-85" target="_blank" rel="noopener noreferrer" className="btn-secondary px-5 py-2.5 flex items-center gap-2 group">
+                    <Linkedin className="w-5 h-5 text-dark-200 group-hover:text-[#0a66c2] transition-colors" />
+                    <span className="text-sm font-medium">LinkedIn</span>
+                  </a>
+                  <a href="mailto:mudassarjutt65030@gmail.com" className="btn-secondary px-5 py-2.5 flex items-center gap-2 group">
+                    <Mail className="w-5 h-5 text-dark-200 group-hover:text-rose-500 transition-colors" />
+                    <span className="text-sm font-medium">Email</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-24 px-6 relative">
         <div className="glow-orb w-[600px] h-[600px] bg-brand-500 bottom-0 right-0 translate-x-1/2 translate-y-1/2" />
@@ -238,9 +286,7 @@ function LandingPage() {
       <footer className="border-t border-dark-800/50 py-12 px-6">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-accent-cyan flex items-center justify-center">
-              <Target className="w-4 h-4 text-white" />
-            </div>
+            <img src="/logo.png" alt="BizNova Logo" className="w-9 h-9 rounded-lg object-cover" />
             <span className="font-display font-bold text-lg gradient-text">BizNova</span>
           </div>
           <p className="text-dark-500 text-sm">

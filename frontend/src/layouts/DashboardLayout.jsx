@@ -32,9 +32,7 @@ function DashboardLayout() {
       >
         {/* Logo */}
         <div className="flex items-center gap-3 px-5 h-16 border-b border-dark-700/50">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-500 to-accent-cyan flex items-center justify-center flex-shrink-0">
-            <Target className="w-5 h-5 text-white" />
-          </div>
+          <img src="/logo.png" alt="BizNova Logo" className="w-10 h-10 rounded-xl object-cover" />
           {sidebarOpen && (
             <span className="font-display font-bold text-xl gradient-text animate-fade-in">
               BizNova
