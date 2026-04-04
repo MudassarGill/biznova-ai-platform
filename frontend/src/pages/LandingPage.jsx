@@ -66,17 +66,17 @@ function LandingPage() {
   return (
     <div className="min-h-screen bg-dark-950 overflow-hidden">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-dark-950/80 backdrop-blur-xl border-b border-dark-800/50">
+      <nav className="fixed top-0 w-full z-50 bg-dark-900/80 backdrop-blur-xl border-b border-dark-800/50 shadow-lg shadow-brand-500/5">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img src="/logo.png" alt="BizNova Logo" className="w-10 h-10 rounded-xl object-cover" />
             <span className="font-display font-bold text-xl gradient-text">BizNova</span>
           </div>
           <div className="hidden md:flex items-center gap-8">
-            <a href="#features" className="text-dark-300 hover:text-white transition-colors text-sm font-medium">Features</a>
-            <a href="#tech" className="text-dark-300 hover:text-white transition-colors text-sm font-medium">Technology</a>
-            <a href="#about" className="text-dark-300 hover:text-white transition-colors text-sm font-medium">About</a>
-            <a href="#stats" className="text-dark-300 hover:text-white transition-colors text-sm font-medium">Stats</a>
+            <a href="#features" className="nav-link">Features</a>
+            <a href="#tech" className="nav-link">Technology</a>
+            <a href="#about" className="nav-link">About</a>
+            <a href="#stats" className="nav-link">Stats</a>
           </div>
           <button
             onClick={() => navigate('/input')}
@@ -167,17 +167,17 @@ function LandingPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map(({ icon: Icon, title, description, color }, index) => (
+            {features.map(({ icon: Icon, title, description }, index) => (
               <div
                 key={title}
-                className="glass-card-hover p-7 group"
+                className="p-8 rounded-2xl bg-dark-900/40 border border-dark-800 hover:border-dark-600 hover:shadow-xl hover:shadow-brand-500/10 transition-all duration-300 group hover:-translate-y-1"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${color} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300`}>
-                  <Icon className="w-6 h-6 text-white" />
+                <div className="w-12 h-12 rounded-lg bg-dark-800/80 border border-dark-700 flex items-center justify-center mb-6 group-hover:bg-dark-700 transition-colors duration-300">
+                  <Icon className="w-5 h-5 text-dark-200 group-hover:text-accent-cyan transition-colors" />
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-3">{title}</h3>
-                <p className="text-dark-400 leading-relaxed">{description}</p>
+                <h3 className="text-xl font-medium text-white mb-3 tracking-wide">{title}</h3>
+                <p className="text-dark-400 leading-relaxed text-sm">{description}</p>
               </div>
             ))}
           </div>
