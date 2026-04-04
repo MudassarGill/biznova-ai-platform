@@ -79,7 +79,7 @@ function LandingPage() {
             <a href="#stats" className="nav-link">Stats</a>
           </div>
           <button
-            onClick={() => navigate('/input')}
+            onClick={() => navigate('/auth')}
             className="btn-primary text-sm px-5 py-2.5"
             id="nav-get-started"
           >
@@ -122,7 +122,7 @@ function LandingPage() {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-slide-up animate-delay-300">
             <button
-              onClick={() => navigate('/input')}
+              onClick={() => navigate('/auth')}
               className="btn-primary text-lg px-8 py-4 flex items-center gap-2 group"
               id="hero-get-started"
             >
@@ -272,7 +272,7 @@ function LandingPage() {
             Join thousands of entrepreneurs using AI to discover and validate profitable business opportunities.
           </p>
           <button
-            onClick={() => navigate('/input')}
+            onClick={() => navigate('/auth')}
             className="btn-primary text-lg px-10 py-4 inline-flex items-center gap-2 group"
             id="cta-get-started"
           >

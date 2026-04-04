@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import { useApp } from './context/AppContext'
 import DashboardLayout from './layouts/DashboardLayout'
 import LandingPage from './pages/LandingPage'
+import AuthPage from './pages/AuthPage'
 import InputPage from './pages/InputPage'
 import IdeasPage from './pages/IdeasPage'
 import AnalysisPage from './pages/AnalysisPage'
@@ -19,6 +20,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/auth" element={<AuthPage />} />
         <Route element={<DashboardLayout />}>
           <Route path="/input" element={<InputPage />} />
           <Route path="/ideas" element={<IdeasPage />} />
