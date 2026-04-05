@@ -132,7 +132,7 @@ function ForecastPage() {
             <Area type="monotone" dataKey="upper" stroke="none" fill="url(#confGrad)" name="Upper Bound" />
             <Area type="monotone" dataKey="lower" stroke="none" fill="transparent" name="Lower Bound" />
             <Line type="monotone" dataKey="predicted" stroke="#6366f1" strokeWidth={3} dot={{ fill: '#6366f1', r: 4 }} name="Predicted" />
-            <Line type="monotone" dataKey="actual" stroke="#10b981" strokeWidth={3} dot={{ fill: '#10b981', r: 4 }} name="Actual" connectNulls={false} />
+            <Line type="monotone" dataKey="actual" stroke="#10b981" strokeWidth={3} dot={{ fill: '#049766ff', r: 4 }} name="Actual" connectNulls={false} />
           </AreaChart>
         </ResponsiveContainer>
       </div>
@@ -146,12 +146,12 @@ function ForecastPage() {
           <ResponsiveContainer width="100%" height={280}>
             <BarChart data={growthRate.slice(1)}>
               <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-              <XAxis dataKey="month" stroke="#64748b" fontSize={11} />
+              <XAxis dataKey="month" stroke="#5e728fff" fontSize={11} />
               <YAxis stroke="#64748b" fontSize={12} unit="%" />
               <Tooltip content={<CustomTooltip />} />
               <Bar dataKey="growth" name="Growth %" radius={[6, 6, 0, 0]}>
                 {growthRate.slice(1).map((entry, idx) => (
-                  <rect key={idx} fill={entry.growth >= 0 ? '#10b981' : '#f43f5e'} />
+                  <rect key={idx} fill={entry.growth >= 0 ? '#10b981' : '#f33958ff'} />
                 ))}
               </Bar>
             </BarChart>
