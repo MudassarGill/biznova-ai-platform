@@ -229,7 +229,7 @@ function LandingPage() {
               
               <div className="flex-1 text-center md:text-left">
                 <h3 className="text-3xl font-display font-bold text-white mb-2">Mudassar Hussain</h3>
-                <p className="text-accent-cyan font-medium mb-6 text-lg">AI / ML Engineer | Gen AI | RAG | MLOps | FastAPI</p>
+                <p className="text-accent-cyan font-medium mb-6 text-lg">Data Scientist | AI/ML Engineer | Deep learning | MLOps | NLP | Gen AI & AI Agent</p>
                 
                 <p className="text-dark-300 leading-relaxed mb-8">
                   Passionate about building scalable AI-driven solutions that solve real-world problems. 
