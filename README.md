@@ -21,12 +21,12 @@ Whether you're brainstorming your first startup or analyzing complex market tren
 
 ## ✨ Core Features
 
-- **💡 AI Idea Generation:** Get strictly personalized business ideas tailored to your budget, technical skills, and geographical location using advanced Generative AI capabilities.
-- **📊 Market Analysis Pipeline:** Deep dive into product demand, competitive landscape, and city-wise insights powered by reliable background machine learning models.
-- **📈 Future Forecasting:** Anticipate market movements using real-time time-series predictive modeling visualized with robust data charts.
-- **📝 Automated Business Plans:** Instantly generate complete business plans encompassing tactical execution strategies, marketing layouts, and investment breakdowns.
-- **🤖 Context-Aware AI Assistant:** A persistent AI copilot seamlessly integrated into the application to offer continuous guidance and data-driven decision reinforcement.
-- **🔐 Secure Authentication Flow:** Professional split-screen UI for local or SSO (Google/Apple) seamless user onboarding and session management.
+- ** AI Idea Generation:** Get strictly personalized business ideas tailored to your budget, technical skills, and geographical location using advanced Generative AI capabilities.
+- ** Market Analysis Pipeline:** Deep dive into product demand, competitive landscape, and city-wise insights powered by reliable background machine learning models.
+- ** Future Forecasting:** Anticipate market movements using real-time time-series predictive modeling visualized with robust data charts.
+- ** Automated Business Plans:** Instantly generate complete business plans encompassing tactical execution strategies, marketing layouts, and investment breakdowns.
+- ** Context-Aware AI Assistant:** A persistent AI copilot seamlessly integrated into the application to offer continuous guidance and data-driven decision reinforcement.
+- ** Secure Authentication Flow:** Professional split-screen UI for local or SSO (Google/Apple) seamless user onboarding and session management.
 
 ## 🛠️ Technology Stack
 
@@ -121,13 +121,14 @@ biznova-ai-platform/
 ## 👨‍💻 About the Creator
 
 **Mudassar Hussain**  
-*AI / ML Engineer | Gen AI | RAG | MLOps | FastAPI*
+*Data Scientist | AI/ML Engineer | Deep learning | MLOps | NLP | Gen AI & AI Agent*
 
 Passionate about building scalable AI-driven solutions that solve real-world problems. With specialized expertise in Machine Learning, Generative AI, RAG architectures, and rigorous MLOps practices, BizNova was architected to empower entrepreneurs by turning abstract ideas into data-driven business intelligence.
 
 - **GitHub:** [@MudassarGill](https://github.com/MudassarGill)
 - **LinkedIn:** [M. Mudassar Hussain](https://linkedin.com/in/m-mudassar-85)
 - **Email:** mudassarjutt65030@gmail.com
+- **Portfolio:** [Mudassar Hussain](https://mudassar-ai-portfolio.onrender.com)
 
 ---
 
