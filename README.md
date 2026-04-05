@@ -1,7 +1,7 @@
 <div align="center">
   <img src="frontend/public/logo.png" alt="BizNova Logo" width="120" height="auto" />
   <h1>BizNova AI-Powered Business Intelligence Platform</h1>
-  <p><strong>From Idea to Execution with AI</strong></p>
+  <p><strong>From Idea to Execution with AI BizNova</strong></p>
   
   <p>
     <img src="https://img.shields.io/badge/Frontend-React%20%7C%20Vite-61DAFB?style=for-the-badge&logo=react&logoColor=white" alt="React" />
