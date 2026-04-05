@@ -33,7 +33,7 @@ function UserDashboard() {
         <div className="glow-orb w-[300px] h-[300px] bg-brand-500 -top-20 -right-20" />
         <div className="relative z-10">
           <h1 className="text-3xl font-display font-bold text-white mb-2">
-            Welcome back! 👋
+            Welcome back from BizNova AI
           </h1>
           <p className="text-dark-400 text-lg mb-6">
             Your AI-powered business intelligence dashboard is ready.
