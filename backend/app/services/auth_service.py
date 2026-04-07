@@ -32,4 +32,20 @@ class AuthService:
         self.db.commit()
         self.db.refresh(db_user)
         return db_user
+
+    def login_user(self, user_in: UserLogin):
+        user = self.db.query(User).filter(User.email == user_in.email).first()
+        if not user:
+            raise HTTPException(status_code=401, detail="Email or Password incorrect!")
+            
+        if not verify_password(user_in.password, user.hashed_password):
+            raise HTTPException(status_code=401, detail="Email or Password incorrect!")
+            
+        from app.core.security import create_access_token
+        access_token = create_access_token(data={"sub": user.email})
         
+        return {
+            "access_token": access_token, 
+            "token_type": "bearer",
+            "user": user
+        }
