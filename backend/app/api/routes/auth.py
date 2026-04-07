@@ -1,21 +1,15 @@
-from fastapi import FastAPI
-from fastapi.responses import JSONResponse
-from fastapi.routing import APIRouter
+from fastapi import APIRouter,Depends
+from sqlalchemy.orm import Session
+from app.db.session import get_db
+from app.schemas.user import UserCreate,UserLogin,UserResponse
 from app.services.auth_service import AuthService
-from pydantic import BaseModel
-
+import AuthService
 router = APIRouter()
 
-class User(BaseModel):
-    email: str
-    password: str
+@router.post("/register",response_model=UserResponse)
+async def register(user:UserCreate,db:Session=Depends(get_db)):
+    auth_service = AuthService(db)
+    
+    new_user=auth_service.register_user(user_in)
+    return new_user
 
-@router.post("/register")
-async def register(user: User):
-    auth_service = AuthService()
-    return auth_service.register(user)
-
-@router.post("/login")
-async def login(user: User):
-    auth_service = AuthService()
-    return auth_service.login(user)
