@@ -235,6 +235,13 @@ export function AppProvider({ children }) {
     }
   }
 
+  const getErrorMessage = (data) => {
+    if (!data.detail) return null;
+    if (typeof data.detail === 'string') return data.detail;
+    if (Array.isArray(data.detail)) return data.detail[0]?.msg || 'Validation Error';
+    return String(data.detail);
+  };
+
   // ─── Auth: Signup ───
   const signup = useCallback(async (email, password, fullName) => {
     setIsLoading(true)
@@ -251,7 +258,7 @@ export function AppProvider({ children }) {
       const data = await res.json()
 
       if (!res.ok) {
-        showToast(data.detail || 'Signup failed', 'error')
+        showToast(getErrorMessage(data) || 'Signup failed', 'error')
         setIsLoading(false)
         return false
       }
@@ -278,12 +285,42 @@ export function AppProvider({ children }) {
       const data = await res.json()
 
       if (!res.ok) {
-        showToast(data.detail || 'Login failed', 'error')
+        showToast(getErrorMessage(data) || 'Login failed', 'error')
         setIsLoading(false)
         return false
       }
 
       // Save token and user
+      localStorage.setItem('biznova_token', data.access_token)
+      setToken(data.access_token)
+      setUser(data.user)
+      showToast(`👋 Welcome back, ${data.user.full_name || data.user.email}!`, 'success')
+      setIsLoading(false)
+      return true
+    } catch {
+      showToast('Server unreachable. Please try again.', 'error')
+      setIsLoading(false)
+      return false
+    }
+  }, [showToast])
+
+  // ─── Auth: Google Login ───
+  const loginWithGoogle = useCallback(async (token) => {
+    setIsLoading(true)
+    try {
+      const res = await fetch(`${API_BASE}/api/auth/google`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token }),
+      })
+      const data = await res.json()
+
+      if (!res.ok) {
+        showToast(data.detail || 'Google Login failed', 'error')
+        setIsLoading(false)
+        return false
+      }
+
       localStorage.setItem('biznova_token', data.access_token)
       setToken(data.access_token)
       setUser(data.user)
@@ -426,7 +463,6 @@ export function AppProvider({ children }) {
     })
   }, [showToast])
 
-  // ─── AI: Chat with BizNova AI Assistant ───
   const sendChatMessage = useCallback(async (content) => {
     const userMsg = { id: Date.now(), role: 'user', content }
     setChatMessages(prev => [...prev, userMsg])
@@ -442,7 +478,10 @@ export function AppProvider({ children }) {
         }),
       })
 
-      if (!res.ok) throw new Error('Chat failed')
+      if (!res.ok) {
+        const errorData = await res.json()
+        throw new Error(errorData.detail || 'Chat failed')
+      }
 
       const data = await res.json()
       const aiMsg = {
@@ -451,31 +490,22 @@ export function AppProvider({ children }) {
         content: data.response,
       }
       setChatMessages(prev => [...prev, aiMsg])
-    } catch {
-      // Fallback to mock responses
-      await new Promise(resolve => setTimeout(resolve, 1000))
-
-      const responses = [
-        "Based on market analysis, I'd recommend focusing on the tech sector. The current growth rate of 32% in SaaS tools suggests strong demand for innovative solutions.",
-        "Great question! Looking at your budget and skills, I think an AI-powered content creation platform could be a perfect fit. The initial investment is relatively low, and the market is expanding rapidly.",
-        "The competitive landscape shows that while there are established players, there's significant room for niche solutions. Consider targeting underserved segments like small businesses or freelancers.",
-        "From a forecasting perspective, the data suggests steady growth in your chosen market over the next 12-18 months. I'd recommend an agile launch strategy to capture early market share.",
-        "For your business plan, I suggest a lean approach: start with an MVP, validate with 100 beta users, then scale. This minimizes risk while maximizing learning opportunities.",
-      ]
-
-      const aiMsg = {
+    } catch (err) {
+      showToast(err.message, 'error')
+      // Remove the user message if it failed, or add an error message
+      const errorMsg = {
         id: Date.now() + 1,
         role: 'assistant',
-        content: responses[Math.floor(Math.random() * responses.length)]
+        content: `⚠️ Error: ${err.message}. Please check your API key or internet connection.`
       }
-      setChatMessages(prev => [...prev, aiMsg])
+      setChatMessages(prev => [...prev, errorMsg])
     }
-  }, [chatMessages, selectedIdea])
+  }, [chatMessages, selectedIdea, showToast])
 
   const value = {
     // Auth
     user, token, isAuthenticated,
-    login, logout, signup,
+    login, logout, signup, loginWithGoogle,
     // App
     userProfile, setUserProfile,
     businessIdeas, setBusinessIdeas,

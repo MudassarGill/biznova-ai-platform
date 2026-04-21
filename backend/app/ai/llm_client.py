@@ -8,7 +8,7 @@ def get_gemini_model():
     """Initialize and return the Gemini model."""
     genai.configure(api_key=settings.GEMINI_API_KEY)
     model = genai.GenerativeModel(
-        model_name="gemini-2.0-flash",
+        model_name="gemini-1.5-flash",
         generation_config={
             "temperature": 0.8,
             "top_p": 0.95,

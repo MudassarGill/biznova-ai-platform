@@ -18,6 +18,10 @@ class Settings:
     
     # AI / Gemini
     GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
+
+    # Google Auth
+    GOOGLE_CLIENT_ID: str = os.getenv("GOOGLE_CLIENT_ID", "")
+
     
     # CORS
     CORS_ORIGINS: list = os.getenv("CORS_ORIGINS", "http://localhost:5173").split(",")

@@ -50,3 +50,52 @@ class AuthService:
             "token_type": "bearer",
             "user": user
         }
+
+    def google_login(self, token: str):
+        """
+        Verify Google token, create user if not exists, and return JWT.
+        """
+        import uuid
+        from fastapi import HTTPException
+
+        # For local testing without a real Google Client ID, we construct a fake JWT on frontend.
+        if len(token.split('.')) == 3:
+            try:
+                import jwt as pyjwt
+                idinfo = pyjwt.decode(token, options={"verify_signature": False})
+            except Exception as e:
+                raise HTTPException(status_code=400, detail=f"Invalid mock token: {str(e)}")
+        else:
+            # It's a real Google access token from useGoogleLogin
+            import requests
+            resp = requests.get("https://www.googleapis.com/oauth2/v3/userinfo", headers={"Authorization": f"Bearer {token}"})
+            if not resp.ok:
+                raise HTTPException(status_code=400, detail="Invalid Google access token")
+            idinfo = resp.json()
+
+        email = idinfo.get("email")
+        if not email:
+            raise HTTPException(status_code=400, detail="Google token does not contain email")
+
+        full_name = idinfo.get("name", "")
+
+        user = self.db.query(User).filter(User.email == email).first()
+        if not user:
+            # Create user with random password since they use Google
+            hashed_password = hash_password(str(uuid.uuid4()))
+            user = User(
+                email=email,
+                hashed_password=hashed_password,
+                full_name=full_name,
+            )
+            self.db.add(user)
+            self.db.commit()
+            self.db.refresh(user)
+
+        access_token = create_access_token(data={"sub": user.email})
+        
+        return {
+            "access_token": access_token, 
+            "token_type": "bearer",
+            "user": user
+        }

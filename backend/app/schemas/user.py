@@ -19,6 +19,10 @@ class UserLogin(UserBase):
     """Password to login and also Email"""
     password: str = Field(..., min_length=8, max_length=20, description="Password of the user")
 
+class GoogleLoginRequest(BaseModel):
+    """Google OAuth login token"""
+    token: str = Field(..., description="Google ID Token")
+
 
 class UserUpdate(BaseModel):
     """Schema for updating user profile fields"""
