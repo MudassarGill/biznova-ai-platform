@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.db.session import engine, Base
-from app.api.routes import auth, users
+from app.api.routes import auth, users, ideas, analysis, chat
 from app.core.config import settings
 
 # Create all database tables
@@ -26,8 +26,12 @@ app.add_middleware(
 # ─── Route Registration ───
 app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
 app.include_router(users.router, prefix="/api/users", tags=["Users"])
+app.include_router(ideas.router, prefix="/api/ideas", tags=["Business Ideas"])
+app.include_router(analysis.router, prefix="/api/analysis", tags=["Market Analysis"])
+app.include_router(chat.router, prefix="/api/chat", tags=["AI Chat"])
 
 
 @app.get("/")
 async def health_check():
     return {"status": "ok", "project": settings.PROJECT_NAME}
+

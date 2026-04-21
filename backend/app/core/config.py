@@ -16,6 +16,9 @@ class Settings:
     # Database
     DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./biznova.db")
     
+    # AI / Gemini
+    GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
+    
     # CORS
     CORS_ORIGINS: list = os.getenv("CORS_ORIGINS", "http://localhost:5173").split(",")
 
