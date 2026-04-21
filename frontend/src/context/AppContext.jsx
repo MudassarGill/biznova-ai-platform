@@ -1,6 +1,8 @@
-import { createContext, useContext, useState, useCallback } from 'react'
+import { createContext, useContext, useState, useCallback, useEffect } from 'react'
 
 const AppContext = createContext()
+
+const API_BASE = 'http://localhost:8000'
 
 // Mock data for the frontend
 const mockBusinessIdeas = [
@@ -183,6 +185,12 @@ const mockBusinessPlan = {
 }
 
 export function AppProvider({ children }) {
+  // ─── Auth State ───
+  const [user, setUser] = useState(null)
+  const [token, setToken] = useState(() => localStorage.getItem('biznova_token'))
+  const isAuthenticated = !!token && !!user
+
+  // ─── App State ───
   const [userProfile, setUserProfile] = useState(null)
   const [businessIdeas, setBusinessIdeas] = useState([])
   const [selectedIdea, setSelectedIdea] = useState(null)
@@ -202,10 +210,109 @@ export function AppProvider({ children }) {
     setTimeout(() => setToast(null), 4000)
   }, [])
 
+  // ─── Auth: Fetch current user on app load if token exists ───
+  useEffect(() => {
+    if (token && !user) {
+      fetchCurrentUser()
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const fetchCurrentUser = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/api/users/me`, {
+        headers: { 'Authorization': `Bearer ${token}` },
+      })
+      if (res.ok) {
+        const userData = await res.json()
+        setUser(userData)
+      } else {
+        // Token is invalid/expired — clear it
+        logout()
+      }
+    } catch {
+      // Backend is unreachable
+      console.error('Failed to fetch user profile')
+    }
+  }
+
+  // ─── Auth: Signup ───
+  const signup = useCallback(async (email, password, fullName) => {
+    setIsLoading(true)
+    try {
+      const res = await fetch(`${API_BASE}/api/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          password,
+          full_name: fullName || '',
+        }),
+      })
+      const data = await res.json()
+
+      if (!res.ok) {
+        showToast(data.detail || 'Signup failed', 'error')
+        setIsLoading(false)
+        return false
+      }
+
+      showToast('🎉 Account created! Please log in.', 'success')
+      setIsLoading(false)
+      return true
+    } catch {
+      showToast('Server unreachable. Please try again.', 'error')
+      setIsLoading(false)
+      return false
+    }
+  }, [showToast])
+
+  // ─── Auth: Login ───
+  const login = useCallback(async (email, password) => {
+    setIsLoading(true)
+    try {
+      const res = await fetch(`${API_BASE}/api/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      })
+      const data = await res.json()
+
+      if (!res.ok) {
+        showToast(data.detail || 'Login failed', 'error')
+        setIsLoading(false)
+        return false
+      }
+
+      // Save token and user
+      localStorage.setItem('biznova_token', data.access_token)
+      setToken(data.access_token)
+      setUser(data.user)
+      showToast(`👋 Welcome back, ${data.user.full_name || data.user.email}!`, 'success')
+      setIsLoading(false)
+      return true
+    } catch {
+      showToast('Server unreachable. Please try again.', 'error')
+      setIsLoading(false)
+      return false
+    }
+  }, [showToast])
+
+  // ─── Auth: Logout ───
+  const logout = useCallback(() => {
+    localStorage.removeItem('biznova_token')
+    setToken(null)
+    setUser(null)
+    setUserProfile(null)
+    setBusinessIdeas([])
+    setSelectedIdea(null)
+    setSavedIdeas([])
+    showToast('👋 Logged out successfully', 'info')
+  }, [showToast])
+
   const generateIdeas = useCallback(async (profile) => {
     setIsLoading(true)
     setUserProfile(profile)
-    // Simulate API call
+    // Simulate API call (will be replaced in future steps)
     await new Promise(resolve => setTimeout(resolve, 2000))
     setBusinessIdeas(mockBusinessIdeas)
     setIsLoading(false)
@@ -235,7 +342,7 @@ export function AppProvider({ children }) {
     const userMsg = { id: Date.now(), role: 'user', content }
     setChatMessages(prev => [...prev, userMsg])
 
-    // Simulate AI response
+    // Simulate AI response (will be replaced in future steps)
     await new Promise(resolve => setTimeout(resolve, 1500))
 
     const responses = [
@@ -255,6 +362,10 @@ export function AppProvider({ children }) {
   }, [])
 
   const value = {
+    // Auth
+    user, token, isAuthenticated,
+    login, logout, signup,
+    // App
     userProfile, setUserProfile,
     businessIdeas, setBusinessIdeas,
     selectedIdea, selectIdea,

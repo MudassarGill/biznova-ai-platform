@@ -242,7 +242,7 @@ function LandingPage() {
                     <Github className="w-5 h-5 text-dark-200 group-hover:text-white transition-colors" />
                     <span className="text-sm font-medium">GitHub</span>
                   </a>
-                  <a href="https://linkedin.com/in/m-mudassar-85" target="_blank" rel="noopener noreferrer" className="btn-secondary px-5 py-2.5 flex items-center gap-2 group">
+                  <a href="https://linkedin.com/in/m-mudassar-885" target="_blank" rel="noopener noreferrer" className="btn-secondary px-5 py-2.5 flex items-center gap-2 group">
                     <Linkedin className="w-5 h-5 text-dark-200 group-hover:text-[#0a66c2] transition-colors" />
                     <span className="text-sm font-medium">LinkedIn</span>
                   </a>

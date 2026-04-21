@@ -17,10 +17,22 @@ const businessCategories = [
   'Food & Beverage', 'Real Estate', 'Entertainment', 'Sustainability', 'Consulting',
 ]
 
-const locations = [
+const pakistanCities = [
+  'Karachi', 'Lahore', 'Islamabad', 'Rawalpindi', 'Faisalabad',
+  'Multan', 'Peshawar', 'Quetta', 'Sialkot', 'Gujranwala',
+  'Hyderabad', 'Bahawalpur', 'Sargodha', 'Abbottabad', 'Mardan',
+  'Sukkur', 'Larkana', 'Sahiwal', 'Jhang', 'Rahim Yar Khan',
+  'Sheikhupura', 'Gujrat', 'Kasur', 'Dera Ghazi Khan', 'Chiniot',
+  'Muzaffargarh', 'Mirpur Khas', 'Nawabshah', 'Mingora', 'Kohat',
+  'Okara', 'Kamoke', 'Jhelum', 'Sadiqabad', 'Burewala',
+  'Jacobabad', 'Khairpur', 'Khanewal', 'Hafizabad', 'Attock',
+]
+
+const internationalCities = [
   'New York', 'San Francisco', 'Austin', 'Chicago', 'Seattle',
   'Miami', 'Denver', 'Boston', 'Los Angeles', 'Atlanta',
   'London', 'Berlin', 'Toronto', 'Singapore', 'Dubai',
+  'Riyadh', 'Doha', 'Istanbul', 'Kuala Lumpur', 'Sydney',
 ]
 
 function InputPage() {
@@ -36,6 +48,8 @@ function InputPage() {
   })
 
   const [skillInput, setSkillInput] = useState('')
+  const [useCustomLocation, setUseCustomLocation] = useState(false)
+  const [customLocation, setCustomLocation] = useState('')
 
   const addSkill = (skill) => {
     if (!formData.skills.includes(skill)) {
@@ -69,7 +83,7 @@ function InputPage() {
     navigate('/ideas')
   }
 
-  const isValid = formData.budget && formData.location && formData.skills.length > 0
+  const isValid = formData.budget && (formData.location || customLocation) && formData.skills.length > 0
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -127,19 +141,72 @@ function InputPage() {
               <MapPin className="w-4 h-4 text-accent-rose" />
               Target Location
             </label>
-            <select
-              value={formData.location}
-              onChange={e => setFormData(prev => ({ ...prev, location: e.target.value }))}
-              className="input-field"
-              id="location-select"
-            >
-              <option value="">Select a city...</option>
-              {locations.map(loc => (
-                <option key={loc} value={loc}>{loc}</option>
-              ))}
-            </select>
+
+            {!useCustomLocation ? (
+              <>
+                <select
+                  value={formData.location}
+                  onChange={e => {
+                    if (e.target.value === '__custom__') {
+                      setUseCustomLocation(true)
+                      setFormData(prev => ({ ...prev, location: '' }))
+                    } else {
+                      setFormData(prev => ({ ...prev, location: e.target.value }))
+                    }
+                  }}
+                  className="input-field"
+                  id="location-select"
+                >
+                  <option value="">Select a city...</option>
+                  <optgroup label="🇵🇰 Pakistan">
+                    {pakistanCities.map(loc => (
+                      <option key={loc} value={loc}>{loc}</option>
+                    ))}
+                  </optgroup>
+                  <optgroup label="🌍 International">
+                    {internationalCities.map(loc => (
+                      <option key={loc} value={loc}>{loc}</option>
+                    ))}
+                  </optgroup>
+                  <optgroup label="➕ Other">
+                    <option value="__custom__">Type my own city...</option>
+                  </optgroup>
+                </select>
+              </>
+            ) : (
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  value={customLocation}
+                  onChange={e => {
+                    setCustomLocation(e.target.value)
+                    setFormData(prev => ({ ...prev, location: e.target.value }))
+                  }}
+                  placeholder="Enter your city name..."
+                  className="input-field"
+                  autoFocus
+                  id="custom-location-input"
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    setUseCustomLocation(false)
+                    setCustomLocation('')
+                    setFormData(prev => ({ ...prev, location: '' }))
+                  }}
+                  className="p-3 bg-dark-700 rounded-xl text-dark-300 hover:text-white hover:bg-dark-600 transition-colors flex-shrink-0"
+                  title="Back to list"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            )}
+
             <p className="text-xs text-dark-500 mt-3">
-              Market analysis will be focused on this region
+              {useCustomLocation
+                ? 'Type your city name — click ✕ to go back to the list'
+                : 'Select a city or choose "Type my own city" at the bottom'
+              }
             </p>
           </div>
         </div>

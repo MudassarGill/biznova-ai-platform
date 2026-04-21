@@ -1,18 +1,38 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useApp } from '../context/AppContext';
 import { User, Lock, Mail, ArrowRight, Eye, EyeOff } from 'lucide-react';
 
 function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [fullName, setFullName] = useState('');
   const navigate = useNavigate();
+  const { login, signup, isLoading } = useApp();
 
-  const toggleAuthMode = () => setIsLogin(!isLogin);
+  const toggleAuthMode = () => {
+    setIsLogin(!isLogin);
+    setEmail('');
+    setPassword('');
+    setFullName('');
+  };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Front-end simulation: proceed to dashboard
-    navigate('/dashboard');
+
+    if (isLogin) {
+      const success = await login(email, password);
+      if (success) navigate('/dashboard');
+    } else {
+      const success = await signup(email, password, fullName);
+      if (success) {
+        // Switch to login mode after successful signup
+        setIsLogin(true);
+        setPassword('');
+      }
+    }
   };
 
   return (
@@ -30,32 +50,43 @@ function AuthPage() {
             <form onSubmit={handleSubmit} className="space-y-4">
               {!isLogin && (
                 <div className="relative">
-                  <Mail className="w-5 h-5 text-dark-400 absolute left-4 top-1/2 -translate-y-1/2" />
+                  <User className="w-5 h-5 text-dark-400 absolute left-4 top-1/2 -translate-y-1/2" />
                   <input 
-                    type="email" 
-                    placeholder="Email" 
+                    type="text" 
+                    placeholder="Full Name" 
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
                     className="w-full py-2.5 pl-12 pr-4 bg-dark-800/50 border border-dark-600 rounded-xl text-white placeholder-dark-400 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all"
-                    required
+                    id="fullname-input"
                   />
                 </div>
               )}
 
               <div className="relative">
-                <User className="w-5 h-5 text-dark-400 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <Mail className="w-5 h-5 text-dark-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
                 <input 
-                  type="text" 
-                  placeholder="Username" 
-                  className="w-full py-2.5 pl-4 pr-10 bg-dark-800/50 border border-dark-600 rounded-xl text-white placeholder-dark-400 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all"
+                  type="email" 
+                  placeholder="Email" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full py-2.5 pl-12 pr-4 bg-dark-800/50 border border-dark-600 rounded-xl text-white placeholder-dark-400 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all"
                   required
+                  id="email-input"
                 />
               </div>
 
               <div className="relative">
+                <Lock className="w-5 h-5 text-dark-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
                 <input 
                   type={showPassword ? 'text' : 'password'} 
-                  placeholder="Password" 
-                  className="w-full py-2.5 pl-4 pr-10 bg-dark-800/50 border border-dark-600 rounded-xl text-white placeholder-dark-400 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all"
+                  placeholder="Password (min 8 characters)" 
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full py-2.5 pl-12 pr-10 bg-dark-800/50 border border-dark-600 rounded-xl text-white placeholder-dark-400 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all"
                   required
+                  minLength={8}
+                  maxLength={20}
+                  id="password-input"
                 />
                 <button 
                   type="button"
@@ -77,9 +108,21 @@ function AuthPage() {
 
               <button 
                 type="submit" 
-                className="w-full py-3.5 mt-4 rounded-full bg-gradient-to-r from-brand-600 to-purple-600 text-white font-bold tracking-wide hover:shadow-glow hover:scale-[1.02] transition-all"
+                disabled={isLoading}
+                className="w-full py-3.5 mt-4 rounded-full bg-gradient-to-r from-brand-600 to-purple-600 text-white font-bold tracking-wide hover:shadow-glow hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
+                id="auth-submit-btn"
               >
-                {isLogin ? 'Login' : 'Sign Up'}
+                {isLoading ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    {isLogin ? 'Signing in...' : 'Creating account...'}
+                  </>
+                ) : (
+                  <>
+                    {isLogin ? 'Login' : 'Sign Up'}
+                    <ArrowRight className="w-4 h-4" />
+                  </>
+                )}
               </button>
             </form>
 

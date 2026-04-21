@@ -1,9 +1,10 @@
-import { Outlet, NavLink, useLocation } from 'react-router-dom'
+import { Outlet, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
+import { useEffect } from 'react'
 import {
   LayoutDashboard, Lightbulb, BarChart3, TrendingUp,
   FileText, MessageSquare, Settings, ChevronLeft,
-  ChevronRight, Search, Bell, User, Sparkles, Menu, Target
+  ChevronRight, Search, Bell, User, Sparkles, Menu, Target, LogOut
 } from 'lucide-react'
 
 const navItems = [
@@ -17,10 +18,27 @@ const navItems = [
 ]
 
 function DashboardLayout() {
-  const { sidebarOpen, setSidebarOpen } = useApp()
+  const { sidebarOpen, setSidebarOpen, user, isAuthenticated, logout } = useApp()
   const location = useLocation()
+  const navigate = useNavigate()
+
+  // Redirect to auth page if not logged in
+  useEffect(() => {
+    if (!isAuthenticated && !localStorage.getItem('biznova_token')) {
+      navigate('/auth')
+    }
+  }, [isAuthenticated, navigate])
 
   const currentPage = navItems.find(item => item.path === location.pathname)
+
+  const handleLogout = () => {
+    logout()
+    navigate('/auth')
+  }
+
+  // Get display name: prefer full_name, fallback to email prefix
+  const displayName = user?.full_name || user?.email?.split('@')[0] || 'User'
+  const displayEmail = user?.email || ''
 
   return (
     <div className="flex h-screen bg-dark-950">
@@ -62,8 +80,17 @@ function DashboardLayout() {
           ))}
         </nav>
 
-        {/* Collapse Button */}
-        <div className="p-3 border-t border-dark-700/50">
+        {/* Logout + Collapse */}
+        <div className="p-3 border-t border-dark-700/50 space-y-1">
+          <button
+            onClick={handleLogout}
+            className={`sidebar-link w-full text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 ${!sidebarOpen ? 'justify-center px-2' : ''}`}
+            id="logout-btn"
+            title={!sidebarOpen ? 'Logout' : undefined}
+          >
+            <LogOut className="w-5 h-5 flex-shrink-0" />
+            {sidebarOpen && <span className="animate-fade-in">Logout</span>}
+          </button>
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="sidebar-link w-full justify-center"
@@ -112,14 +139,16 @@ function DashboardLayout() {
               <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-brand-500 rounded-full" />
             </button>
 
-            {/* User Avatar */}
+            {/* User Avatar + Info */}
             <div className="flex items-center gap-3 pl-3 border-l border-dark-700">
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-500 to-accent-emerald flex items-center justify-center">
-                <User className="w-4 h-4 text-white" />
+                <span className="text-sm font-bold text-white">
+                  {displayName.charAt(0).toUpperCase()}
+                </span>
               </div>
               <div className="hidden md:block">
-                <p className="text-sm font-medium text-white">User</p>
-                <p className="text-xs text-dark-400">Pro Plan</p>
+                <p className="text-sm font-medium text-white">{displayName}</p>
+                <p className="text-xs text-dark-400 max-w-[140px] truncate">{displayEmail}</p>
               </div>
             </div>
           </div>
