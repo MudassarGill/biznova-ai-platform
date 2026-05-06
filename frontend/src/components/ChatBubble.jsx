@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { MessageSquare, X, Send } from 'lucide-react'
+import { MessageSquare, X, Send, Bot, User } from 'lucide-react'
 import { useApp } from '../context/AppContext'
 
 function ChatBubble() {
   const [isOpen, setIsOpen] = useState(false)
   const [input, setInput] = useState('')
-  const { chatMessages, sendChatMessage } = useApp()
+  const { chatMessages, sendChatMessage, isStreaming } = useApp()
   const location = useLocation()
   const navigate = useNavigate()
 
@@ -14,18 +14,15 @@ function ChatBubble() {
   if (location.pathname === '/' || location.pathname === '/chat') return null
 
   const handleSend = async () => {
-    if (!input.trim()) return
-    await sendChatMessage(input.trim())
+    if (!input.trim() || isStreaming) return
+    const msg = input.trim()
     setInput('')
+    await sendChatMessage(msg)
   }
 
   if (!isOpen) {
     return (
-      <button
-        onClick={() => setIsOpen(true)}
-        className="chat-bubble"
-        id="chat-bubble-btn"
-      >
+      <button onClick={() => setIsOpen(true)} className="chat-bubble" id="chat-bubble-btn">
         <MessageSquare className="w-6 h-6 text-white" />
       </button>
     )
@@ -37,18 +34,16 @@ function ChatBubble() {
       <div className="flex items-center justify-between p-4 border-b border-dark-700/50">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-full bg-gradient-to-r from-brand-500 to-accent-cyan flex items-center justify-center">
-            <MessageSquare className="w-4 h-4 text-white" />
+            <Bot className="w-4 h-4 text-white" />
           </div>
           <div>
             <p className="text-sm font-semibold text-white">BizNova AI</p>
-            <p className="text-xs text-emerald-400">● Online</p>
+            <p className="text-xs text-emerald-400">{isStreaming ? '● Typing...' : '● Online'}</p>
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <button
-            onClick={() => navigate('/chat')}
-            className="text-xs text-brand-400 hover:text-brand-300 transition-colors"
-          >
+          <button onClick={() => navigate('/chat')}
+            className="text-xs text-brand-400 hover:text-brand-300 transition-colors">
             Full Chat →
           </button>
           <button onClick={() => setIsOpen(false)} className="text-dark-400 hover:text-white transition-colors">
@@ -59,17 +54,26 @@ function ChatBubble() {
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {chatMessages.slice(-6).map(msg => (
-          <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-            <div
-              className={`max-w-[80%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
-                msg.role === 'user'
-                  ? 'bg-brand-600 text-white rounded-br-md'
-                  : 'bg-dark-700/80 text-dark-200 rounded-bl-md'
-              }`}
-            >
+        {chatMessages.slice(-8).map(msg => (
+          <div key={msg.id} className={`flex gap-2 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+            {msg.role === 'assistant' && (
+              <div className="w-6 h-6 rounded-md bg-gradient-to-br from-brand-500 to-accent-cyan flex items-center justify-center flex-shrink-0 mt-1">
+                <Bot className="w-3 h-3 text-white" />
+              </div>
+            )}
+            <div className={`max-w-[80%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
+              msg.role === 'user'
+                ? 'bg-brand-600 text-white rounded-br-md'
+                : 'bg-dark-700/80 text-dark-200 rounded-bl-md'
+            }`}>
               {msg.content}
+              {msg.isStreaming && <span className="inline-block w-1.5 h-3.5 bg-brand-400 ml-0.5 animate-pulse rounded-sm" />}
             </div>
+            {msg.role === 'user' && (
+              <div className="w-6 h-6 rounded-md bg-gradient-to-br from-accent-emerald to-green-600 flex items-center justify-center flex-shrink-0 mt-1">
+                <User className="w-3 h-3 text-white" />
+              </div>
+            )}
           </div>
         ))}
       </div>
@@ -77,19 +81,14 @@ function ChatBubble() {
       {/* Input */}
       <div className="p-4 border-t border-dark-700/50">
         <div className="flex items-center gap-2">
-          <input
-            type="text"
-            value={input}
+          <input type="text" value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && handleSend()}
-            placeholder="Ask anything..."
-            className="input-field text-sm py-2"
-            id="chat-bubble-input"
+            placeholder="Ask anything..." disabled={isStreaming}
+            className="input-field text-sm py-2" id="chat-bubble-input"
           />
-          <button
-            onClick={handleSend}
-            className="p-2 bg-brand-600 rounded-xl text-white hover:bg-brand-500 transition-colors"
-            id="chat-bubble-send"
+          <button onClick={handleSend} disabled={isStreaming || !input.trim()}
+            className="p-2 bg-brand-600 rounded-xl text-white hover:bg-brand-500 transition-colors disabled:opacity-50" id="chat-bubble-send"
           >
             <Send className="w-4 h-4" />
           </button>
