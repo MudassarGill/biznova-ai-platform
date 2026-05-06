@@ -1,15 +1,15 @@
 <div align="center">
   <img src="frontend/public/logo.png" alt="BizNova Logo" width="120" height="auto" />
   <h1>🚀 BizNova AI — Business Intelligence Platform</h1>
-  <p><strong>From Idea to Execution — Powered by Generative AI</strong></p>
+  <p><strong>From Idea to Execution — Powered by Generative AI & Corrective RAG</strong></p>
 
   <p>
+    <a href="https://github.com/MudssarGill"><img src="https://img.shields.io/badge/Developer-Mudassar_Gill-009688?style=for-the-badge&logo=github&logoColor=white" alt="Developer" /></a>
     <img src="https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
     <img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI" />
     <img src="https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React" />
-    <img src="https://img.shields.io/badge/Vite-5-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
-    <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind" />
-    <img src="https://img.shields.io/badge/Google_Gemini_AI-FF9900?style=for-the-badge&logo=google&logoColor=white" alt="Gemini AI" />
+    <img src="https://img.shields.io/badge/Google_Gemini-FF9900?style=for-the-badge&logo=google&logoColor=white" alt="Gemini AI" />
+    <img src="https://img.shields.io/badge/ChromaDB-Vector_Store-4B0082?style=for-the-badge" alt="ChromaDB" />
   </p>
 </div>
 
@@ -17,7 +17,9 @@
 
 ## 📖 What is BizNova?
 
-**BizNova** is an AI-powered SaaS platform that helps entrepreneurs and business professionals discover, evaluate, and launch profitable business ideas. Simply enter your budget, city, and skills — and BizNova's AI engine generates personalized business ideas, performs deep market analysis, predicts future trends, creates full business plans, and provides an intelligent AI assistant to guide you every step of the way.
+**BizNova** is an advanced AI-powered SaaS platform that helps entrepreneurs and business professionals discover, evaluate, and launch profitable business ideas. 
+
+By integrating state-of-the-art **Generative AI (Google Gemini 1.5 Flash)** and **Corrective RAG (CRAG)** via **ChromaDB**, BizNova offers real-time streaming chatbot features, long-term conversation memory, deep market analysis, predictive forecasting, and interactive document Q&A.
 
 ---
 
@@ -25,68 +27,22 @@
 
 | Feature | What It Does |
 |---|---|
-| **🧠 AI Idea Generation** | Enter your budget, location, and skills → get 6 data-driven business ideas tailored to you |
-| **📈 Market Analysis** | Interactive charts showing demand trends, city-wise market comparison, and competitive landscape |
-| **🔮 Predictive Forecasting** | 12-month revenue predictions with confidence intervals and risk assessment indicators |
-| **📋 Auto Business Plan** | Complete business plan with investment breakdown, marketing strategy, and phased execution roadmap |
-| **💬 AI Chat Assistant** | Context-aware AI chatbot that remembers your conversation and gives strategic business advice |
-| **🏙️ 40+ Pakistan Cities** | Pre-loaded with Karachi, Lahore, Islamabad, Rawalpindi, Faisalabad, Multan, Peshawar, Quetta, and 32 more Pakistani cities |
-| **✍️ Custom City Input** | Don't see your city? Type any city name manually |
-| **🌍 International Support** | 20 major global cities also included (New York, London, Dubai, Singapore, etc.) |
-| **🔐 Secure Authentication** | Register, login, and manage your profile with JWT-based security |
-| **🌙 Premium Dark UI** | Stunning glassmorphism dark theme with smooth animations and responsive design |
+| **🧠 AI Idea Generation** | Enter your budget, location, and skills → get 6 data-driven business ideas tailored to you. |
+| **📈 Market Analysis** | Interactive charts showing demand trends, city-wise market comparison, and competitive landscape. |
+| **🔮 Predictive Forecasting** | 12-month revenue predictions with confidence intervals and risk assessment indicators. |
+| **📋 Auto Business Plan** | Complete business plan with investment breakdown, marketing strategy, and phased execution roadmap. |
+| **💬 Streaming AI Chat (LTM)**| Real-time, typewriter-effect AI chatbot with **Long-Term Memory** (saves and recalls past chat sessions). |
+| **📄 Corrective RAG (CRAG)** | Upload business documents (PDFs, TXT) and ask the AI questions grounded in your specific documents. |
+| **🏙️ 40+ Pakistan Cities** | Pre-loaded with major Pakistani cities like Lahore, Karachi, and Islamabad, plus custom input support. |
+| **🌍 International Support** | 20 major global cities also included (New York, London, Dubai, Singapore, etc.). |
+| **🔐 Secure Authentication** | Register, login, and Google OAuth support with JWT-based security. |
+| **🌙 Premium Dark UI** | Stunning glassmorphism dark theme with smooth animations, responsive design, and markdown rendering. |
 
 ---
 
-## 🔄 How It Works
+## 🚀 One-Command Quick Start
 
-```
-┌──────────────┐     ┌──────────────────┐     ┌──────────────────┐
-│   1. INPUT   │────▶│  2. AI ANALYSIS  │────▶│   3. RESULTS     │
-│              │     │                  │     │                  │
-│ • Budget     │     │ • Gemini AI      │     │ • 6 Business     │
-│ • City       │     │   processes your │     │   Ideas          │
-│ • Skills     │     │   profile        │     │ • Market Charts  │
-│ • Interests  │     │ • Analyzes local │     │ • Forecasts      │
-│              │     │   markets        │     │ • Business Plan  │
-└──────────────┘     └──────────────────┘     └──────────────────┘
-```
-
-1. **Tell Us About You** — Set your investment budget, select your city (40+ Pakistani cities or type any custom city), add your skills and business interests
-2. **AI Generates Ideas** — Google Gemini AI analyzes your profile and local market conditions to generate 6 personalized business ideas
-3. **Explore Deep Insights** — Click any idea to see market demand charts, competitor analysis, 12-month forecasts, and a complete business plan
-4. **Get AI Guidance** — Use the built-in AI chat assistant anytime for strategic advice and answers to your business questions
-
----
-
-## 🛠️ Tech Stack
-
-### Frontend
-| Technology | Role |
-|---|---|
-| React 18 | UI Framework |
-| Vite 5 | Build Tool (Fast HMR) |
-| Tailwind CSS 3 | Styling (Custom Dark Theme) |
-| React Router v6 | Page Navigation |
-| Recharts | Data Visualization & Charts |
-| Lucide React | Icons |
-| Framer Motion | Animations |
-
-### Backend
-| Technology | Role |
-|---|---|
-| Python 3.10+ | Server Runtime |
-| FastAPI | REST API Framework |
-| Google Gemini 2.0 Flash | AI / Generative AI Engine |
-| SQLAlchemy | Database ORM |
-| SQLite | Database |
-| JWT (python-jose) | Authentication Tokens |
-| Passlib + Bcrypt | Password Security |
-| Pydantic v2 | Request/Response Validation |
-
----
-
-## 🚀 Getting Started
+You can start the entire platform (Frontend + Backend) with a single click!
 
 ### Prerequisites
 
@@ -94,101 +50,77 @@
 - **Python** 3.10+ — [Download](https://python.org)
 - **Gemini API Key** (Free) — [Get it here](https://aistudio.google.com)
 
-### 1. Clone the Repository
+### Clone the Repository
 
 ```bash
-git clone https://github.com/MudassarGill/biznova-ai-platform.git
+git clone https://github.com/MudssarGill/biznova-ai-platform.git
 cd biznova-ai-platform
 ```
 
-### 2. Backend Setup
+### Setup the Environment
 
-```bash
-cd backend
-python -m venv venv
-
-# Activate virtual environment
-# Windows:
-venv\Scripts\activate
-# macOS/Linux:
-source venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
-```
-
-Create a `.env` file in the `backend/` folder:
+1. Create a `.env` file in the `backend/` folder:
 
 ```env
-SECRET_KEY=your_secret_key_here
+SECRET_KEY=your_secure_secret_key_here
 DATABASE_URL=sqlite:///./biznova.db
 ACCESS_TOKEN_EXPIRE_MINUTES=60
 CORS_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
 GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
-Start the server:
-
+2. Install dependencies:
 ```bash
-uvicorn app.main:app --reload
-```
+# Backend
+cd backend
+pip install -r requirements.txt
+cd ..
 
-> Backend runs at **http://localhost:8000** — API docs at **http://localhost:8000/docs**
-
-### 3. Frontend Setup
-
-Open a **new terminal**:
-
-```bash
+# Frontend
 cd frontend
 npm install
-npm run dev
+cd ..
 ```
 
-> Frontend runs at **http://localhost:5173**
+### ▶️ Run Everything Together (Windows)
 
-### 4. Open & Use
+Just double-click the `start.bat` file, or run it in your terminal:
 
-Visit **http://localhost:5173** → Register → Login → Start generating business ideas!
+```cmd
+start.bat
+```
 
----
-
-## 🌐 API Endpoints
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `POST` | `/api/auth/register` | Create new account |
-| `POST` | `/api/auth/login` | Login & get JWT token |
-| `GET` | `/api/users/me` | Get user profile |
-| `PUT` | `/api/users/me` | Update profile |
-| `POST` | `/api/ideas/generate` | Generate AI business ideas |
-| `POST` | `/api/analysis/market` | Get market analysis data |
-| `POST` | `/api/analysis/forecast` | Get 12-month forecast |
-| `POST` | `/api/analysis/plan` | Generate business plan |
-| `POST` | `/api/chat` | Chat with AI assistant |
+This will automatically launch the **FastAPI backend** on `http://localhost:8000` and the **React frontend** on `http://localhost:5173` in two separate terminal windows.
 
 ---
 
-## 🏙️ Supported Cities
+## 🛠️ Tech Stack & Architecture
 
-### 🇵🇰 Pakistan (40 Cities)
-Karachi • Lahore • Islamabad • Rawalpindi • Faisalabad • Multan • Peshawar • Quetta • Sialkot • Gujranwala • Hyderabad • Bahawalpur • Sargodha • Abbottabad • Mardan • Sukkur • Larkana • Sahiwal • Jhang • Rahim Yar Khan • Sheikhupura • Gujrat • Kasur • Dera Ghazi Khan • Chiniot • Muzaffargarh • Mirpur Khas • Nawabshah • Mingora • Kohat • Okara • Kamoke • Jhelum • Sadiqabad • Burewala • Jacobabad • Khairpur • Khanewal • Hafizabad • Attock
+### Frontend
+- **React 18 & Vite 5** for lightning-fast HMR and building.
+- **Tailwind CSS 3** for a customized, premium glassmorphism dark theme.
+- **Recharts** for interactive data visualization.
+- **Server-Sent Events (SSE)** for real-time streaming AI responses.
 
-### 🌍 International (20 Cities)
-New York • San Francisco • Austin • Chicago • Seattle • Miami • Denver • Boston • Los Angeles • Atlanta • London • Berlin • Toronto • Singapore • Dubai • Riyadh • Doha • Istanbul • Kuala Lumpur • Sydney
-
-> **Custom Input**: Select "Type my own city..." to enter any city not listed above.
+### Backend
+- **FastAPI (Python 3.10+)** for high-performance, asynchronous REST APIs.
+- **Google Gemini 1.5 Flash** for idea generation, planning, and chat.
+- **ChromaDB** as the local vector database for document embeddings (CRAG).
+- **SQLAlchemy (SQLite)** for persisting User profiles, Chat Sessions (LTM), and Document metadata.
+- **JWT (python-jose)** + **Passlib (Bcrypt)** for strict authentication protocols.
 
 ---
 
-## 👨‍💻 Author
+## 👨‍💻 Developer & Creator
 
-**Mudassar Hussain**
+**Mudassar Gill**
 
-- 🔗 **GitHub:** [@MudassarGill](https://github.com/MudassarGill)
+- 🔗 **GitHub:** [@MudssarGill](https://github.com/MudssarGill)
 - 💼 **LinkedIn:** [M. Mudassar Hussain](https://linkedin.com/in/m-mudassar-85)
 - 📧 **Email:** mudassarjutt65030@gmail.com
 - 🌐 **Portfolio:** [mudassar-ai-portfolio.onrender.com](https://mudassar-ai-portfolio.onrender.com)
+
+> *Mudassar is a Full-Stack AI/ML Developer specializing in Generative AI, LangGraph, custom RAG systems, and MLOps deployments.*
 
 ---
 
@@ -199,7 +131,7 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 ---
 
 <p align="center">
-  <strong>⭐ Star this repo if you find it useful!</strong>
+  <strong>⭐ If you find this project useful, please give it a Star! ⭐</strong>
   <br/><br/>
   <i>© 2026 BizNova — AI-Powered Business Intelligence Platform</i>
 </p>

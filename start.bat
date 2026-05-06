@@ -1,20 +1,31 @@
 @echo off
-TITLE BizNova Launcher
+TITLE BizNova AI Platform - Launcher
 color 0A
 
-echo =========================================
-echo       Starting BizNova AI Platform
-echo =========================================
+echo.
+echo  ============================================
+echo       🚀 BizNova AI Platform - Starting
+echo  ============================================
+echo.
+echo  Created by: Mudassar Gill (MudssarGill)
 echo.
 
-echo [1/2] Starting Backend (FastAPI)...
-start "BizNova Backend" cmd /k "cd backend && venv\Scripts\activate && pip install -r requirements.txt && uvicorn app.main:app --reload"
+echo [1/2] Starting Backend (FastAPI on port 8000)...
+start "BizNova Backend" cmd /k "cd /d "%~dp0backend" && python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000"
 
-echo [2/2] Starting Frontend (React)...
-start "BizNova Frontend" cmd /k "cd frontend && npm install && npm run dev"
+timeout /t 3 /nobreak > nul
+
+echo [2/2] Starting Frontend (React on port 5173)...
+start "BizNova Frontend" cmd /k "cd /d "%~dp0frontend" && npm run dev"
 
 echo.
-echo Both servers are starting up in separate windows!
-echo Please wait a few seconds, then open: http://localhost:5173 
+echo  ============================================
+echo   Both servers are starting in new windows!
 echo.
-pause
+echo   Backend:  http://localhost:8000
+echo   API Docs: http://localhost:8000/docs
+echo   Frontend: http://localhost:5173
+echo  ============================================
+echo.
+echo  Press any key to close this launcher window...
+pause > nul
