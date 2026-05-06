@@ -64,52 +64,52 @@ function AuthPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-dark-950 p-4">
-      <div className="w-full max-w-4xl min-h-[550px] flex rounded-3xl overflow-hidden glass-card shadow-glow-lg border-dark-700/50 relative md:my-8">
+      <div className="w-full max-w-4xl flex rounded-3xl overflow-hidden glass-card shadow-glow-lg border-dark-700/50 relative md:my-8">
         
         {/* Left Side: Form Section */}
-        <div className="w-full md:w-1/2 p-8 md:p-10 flex flex-col justify-center bg-dark-900/80 backdrop-blur-xl relative z-10 border-r border-dark-800/50">
-          <div className="max-w-md w-full mx-auto">
+        <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-center bg-dark-900/80 backdrop-blur-xl relative z-10 border-r border-dark-800/50">
+          <div className="max-w-sm w-full mx-auto">
             <div className="mb-8 text-center">
-              <h1 className="font-display font-black text-4xl mb-2 gradient-text">BizNova</h1>
-              <p className="text-dark-400 text-sm">{isLogin ? 'Sign in to continue your journey' : 'Create an account to get started'}</p>
+              <h1 className="font-display font-black text-3xl mb-1 gradient-text">BizNova</h1>
+              <p className="text-dark-400 text-xs">{isLogin ? 'Sign in to continue your journey' : 'Create an account to get started'}</p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-3">
               {!isLogin && (
                 <div className="relative">
-                  <User className="w-5 h-5 text-dark-400 absolute left-4 top-1/2 -translate-y-1/2" />
+                  <User className="w-4 h-4 text-dark-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                   <input 
                     type="text" 
                     placeholder="Full Name" 
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    className="w-full py-2.5 pl-12 pr-4 bg-dark-800/50 border border-dark-600 rounded-xl text-white placeholder-dark-400 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all"
+                    className="input-field pl-10 py-2.5 text-sm"
                     id="fullname-input"
                   />
                 </div>
               )}
 
               <div className="relative">
-                <Mail className="w-5 h-5 text-dark-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <Mail className="w-4 h-4 text-dark-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                 <input 
                   type="email" 
                   placeholder="Email" 
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full py-2.5 pl-12 pr-4 bg-dark-800/50 border border-dark-600 rounded-xl text-white placeholder-dark-400 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all"
+                  className="input-field pl-10 py-2.5 text-sm"
                   required
                   id="email-input"
                 />
               </div>
 
               <div className="relative">
-                <Lock className="w-5 h-5 text-dark-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <Lock className="w-4 h-4 text-dark-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                 <input 
                   type={showPassword ? 'text' : 'password'} 
                   placeholder="Password (min 8 characters)" 
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full py-2.5 pl-12 pr-10 bg-dark-800/50 border border-dark-600 rounded-xl text-white placeholder-dark-400 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all"
+                  className="input-field pl-10 pr-10 py-2.5 text-sm"
                   required
                   minLength={8}
                   maxLength={20}
@@ -118,7 +118,7 @@ function AuthPage() {
                 <button 
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-dark-400 hover:text-white transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-dark-400 hover:text-white transition-colors"
                   tabIndex="-1"
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
@@ -136,7 +136,7 @@ function AuthPage() {
               <button 
                 type="submit" 
                 disabled={isLoading}
-                className="w-full py-3.5 mt-4 rounded-full bg-gradient-to-r from-brand-600 to-purple-600 text-white font-bold tracking-wide hover:shadow-glow hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
+                className="w-full py-3 mt-3 rounded-xl bg-gradient-to-r from-brand-600 to-purple-600 text-white text-sm font-bold tracking-wide hover:shadow-glow hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
                 id="auth-submit-btn"
               >
                 {isLoading ? (
@@ -153,7 +153,7 @@ function AuthPage() {
               </button>
             </form>
 
-            <div className="mt-6 text-center">
+            <div className="mt-4 text-center">
               <p className="text-dark-300 text-sm">
                 {isLogin ? "Don't have an account? " : "Already have an account? "}
                 <button onClick={toggleAuthMode} className="text-brand-400 font-semibold hover:text-brand-300 hover:underline transition-all">
@@ -162,7 +162,7 @@ function AuthPage() {
               </p>
             </div>
 
-            <div className="my-6 flex items-center gap-4">
+            <div className="my-4 flex items-center gap-4">
               <div className="flex-1 h-px bg-dark-700"></div>
               <span className="text-dark-500 text-sm">or continue with</span>
               <div className="flex-1 h-px bg-dark-700"></div>
@@ -195,7 +195,7 @@ function AuthPage() {
           <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-brand-400 opacity-20 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4"></div>
           
           <div className="relative z-10 text-right text-white max-w-sm ml-auto">
-            <h2 className="text-5xl font-black mb-6 font-display leading-tight">
+            <h2 className="text-4xl font-black mb-4 font-display leading-tight">
               {isLogin ? "WELCOME BACK!" : "JOIN US TODAY!"}
             </h2>
             <p className="text-brand-100 text-lg leading-relaxed">
