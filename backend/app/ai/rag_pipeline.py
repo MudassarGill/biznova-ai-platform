@@ -411,7 +411,7 @@ a document chunk is relevant to answering a user's question.
 Grade:"""
 
         try:
-            model = genai.GenerativeModel("gemini-1.5-flash")
+            model = genai.GenerativeModel("gemini-2.0-flash")
             response = model.generate_content(
                 grading_prompt,
                 generation_config={"temperature": 0.0, "max_output_tokens": 10},
@@ -489,7 +489,7 @@ Rewrite it to be more targeted and specific. Return ONLY the rewritten question,
 Rewritten question:"""
 
         try:
-            model = genai.GenerativeModel("gemini-1.5-flash")
+            model = genai.GenerativeModel("gemini-2.0-flash")
             response = model.generate_content(
                 rewrite_prompt,
                 generation_config={"temperature": 0.3, "max_output_tokens": 200},
@@ -655,7 +655,7 @@ Answer:"""
         decision, relevant_chunks = await self.crag_retrieve_and_grade(query, user_id)
         prompt = self._build_crag_prompt(query, relevant_chunks, decision)
 
-        model = genai.GenerativeModel("gemini-1.5-flash")
+        model = genai.GenerativeModel("gemini-2.0-flash")
         response = model.generate_content(
             prompt,
             generation_config={"temperature": 0.7, "max_output_tokens": 4096},
@@ -680,7 +680,7 @@ Answer:"""
         decision, relevant_chunks = await self.crag_retrieve_and_grade(query, user_id)
         prompt = self._build_crag_prompt(query, relevant_chunks, decision)
 
-        model = genai.GenerativeModel("gemini-1.5-flash")
+        model = genai.GenerativeModel("gemini-2.0-flash")
         try:
             response = model.generate_content(
                 prompt,

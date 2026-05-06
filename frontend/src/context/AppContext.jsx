@@ -232,7 +232,7 @@ export function AppProvider({ children }) {
       const res = await fetch(`${API_BASE}/api/chat/sessions`, { method: 'POST', headers: authHeaders(), body: JSON.stringify({ title: 'New Chat' }) })
       if (res.ok) {
         const session = await res.json(); setChatSessions(prev => [session, ...prev]); setCurrentSessionId(session.id)
-        setChatMessages([]); return session
+        setChatMessages([{ id: Date.now(), role: 'assistant', content: 'Hello! Start a new conversation.' }]); return session
       }
     } catch { showToast('Failed to create session', 'error') }
     return null

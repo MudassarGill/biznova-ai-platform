@@ -62,7 +62,7 @@ def get_gemini_model():
 
     Configures the API key from environment settings and creates a
     ``GenerativeModel`` with default generation parameters. The model
-    name ``gemini-1.5-flash`` is chosen for its balance of speed and
+    name ``gemini-2.0-flash`` is chosen for its balance of speed and
     quality — fast enough for real-time streaming, capable enough for
     business analysis.
 
@@ -71,7 +71,7 @@ def get_gemini_model():
     """
     genai.configure(api_key=settings.GEMINI_API_KEY)
     model = genai.GenerativeModel(
-        model_name="gemini-1.5-flash",
+        model_name="gemini-2.0-flash",
         generation_config={
             "temperature": 0.8,
             "top_p": 0.95,

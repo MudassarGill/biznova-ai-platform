@@ -46,6 +46,7 @@ function ChatPage() {
   const [showSessions, setShowSessions] = useState(true)
   const [showDocPanel, setShowDocPanel] = useState(false)
   const [sessionSearch, setSessionSearch] = useState('')
+  const [isUploading, setIsUploading] = useState(false)
   const messagesEndRef = useRef(null)
   const inputRef = useRef(null)
   const fileInputRef = useRef(null)
@@ -69,7 +70,12 @@ function ChatPage() {
 
   const handleFileUpload = async (e) => {
     const file = e.target.files?.[0]
-    if (file) { await uploadDocument(file); e.target.value = '' }
+    if (file) { 
+      setIsUploading(true)
+      await uploadDocument(file)
+      setIsUploading(false)
+      e.target.value = '' 
+    }
   }
 
   const filteredSessions = chatSessions.filter(s =>
@@ -156,9 +162,14 @@ function ChatPage() {
             {showDocPanel && (
               <div className="mt-2 space-y-1.5 animate-fade-in">
                 <button onClick={() => fileInputRef.current?.click()}
-                  className="w-full flex items-center justify-center gap-1.5 py-1.5 px-2 rounded-md bg-accent-emerald/10 border border-accent-emerald/20 text-accent-emerald text-xs hover:bg-accent-emerald/20 transition-all"
+                  disabled={isUploading}
+                  className="w-full flex items-center justify-center gap-1.5 py-1.5 px-2 rounded-md bg-accent-emerald/10 border border-accent-emerald/20 text-accent-emerald text-xs hover:bg-accent-emerald/20 transition-all disabled:opacity-50"
                 >
-                  <Upload className="w-3 h-3" /> Upload PDF/TXT
+                  {isUploading ? (
+                    <><div className="w-3 h-3 border-2 border-accent-emerald/30 border-t-accent-emerald rounded-full animate-spin" /> Uploading...</>
+                  ) : (
+                    <><Upload className="w-3 h-3" /> Upload PDF/TXT</>
+                  )}
                 </button>
                 <input ref={fileInputRef} type="file" accept=".pdf,.txt,.md" onChange={handleFileUpload} className="hidden" />
                 {documents.map(doc => (
